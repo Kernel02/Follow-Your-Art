@@ -127,14 +127,15 @@ var checkData = function (data, artSearch) {
     
     //Checking to see if objectIDs exist, if no results found, return comment of "No art found" into the artcontainer html element
     var artcontainerEl = document.querySelector('#art-container');
-    var objectIDs = data.objectIDs;
+
+    //Limit to 10 results when fetching from data.objectIDs using user search input
+    var objectIDs = data.objectIDs.slice(0, 10);
+
     if (!objectIDs || objectIDs.length === 0) {
         artcontainerEl.textContent = "No art found.";
         return;
     }
 
-    //Limit to 10 results when fetching from data.objectIDs using user search input
-    objectIDs = objectIDs.slice(0, 10);
     //Set artcontainerEl to empty string to erase any comments
     artcontainerEl.innerHTML = '';
 

@@ -128,7 +128,7 @@ var checkData = function (data, artSearch) {
     //Checking to see if objectIDs exist, if no results found, return comment of "No art found" into the artcontainer html element
     var artcontainerEl = document.querySelector('#art-container');
 
-    //Limit to 10 results when fetching from data.objectIDs using user search input
+    //Limit to 10 results when fetching from data.objectIDs using user search input with the method slice(startindex, endindex)
     var objectIDs = data.objectIDs.slice(0, 10);
 
     if (!objectIDs || objectIDs.length === 0) {
@@ -143,7 +143,7 @@ var checkData = function (data, artSearch) {
     for (var i = 0; i < data.objectIDs.length; i++) {
         console.log(data.objectIDs[i]);
     }
-}
+};
 
 
 

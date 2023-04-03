@@ -1,32 +1,28 @@
 //Global Variables
-var apiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects/search"
-
-
-//Fetch Function
-function apiRequest(apiUrl) {
-    $.ajax({
-        url: apiUrl,
-        method: "Get"
-    })
-};
-apiRequest(url).then(function(data) {
-
-});
-
-
 
 //Category Department Handler
-//Loop Object
 //Create Elements
 //Append Child
 //Display Art
 
-//Event Listeners
-var searchbuttonEl = document.querySelector('#search-button')
-searchbuttonEl.addEventListener("click", searchHandler);
 
-searchButton.on("click", searchHandler);
-department.on("click", departmentHandler);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -110,19 +106,14 @@ function searchHandler(event) {
     var artSearch = artsearchEl.value.trim();
     var searchApiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" + artSearch;
    
+    //Fetch user search for objectIDs to be passed to another endpoint
     fetch(searchApiUrl)
         .then(function(response) {
-            if (!response.ok) {
-            throw new Error("Network not ok");
-            }
+            if (!response.ok)
             return response.json();
             })
         .then(function(data) {
-            console.log(data);
             checkData(data.objectIDs, artSearch);
-            })
-        .catch(function(error) {
-            console.error("Error: ", error);
             });
 };
 
@@ -140,19 +131,27 @@ var checkData = function (objectIDs, artSearch) {
         return;
     }
 
-    //Limit results to 10
-    // objectIDs = objectIDs.slice(0, 10);
     //Set artcontainerEl to empty string
     artcontainerEl.innerHTML = '';
 
     //Loop through objectIDs array
     for (var i = 0; i < 10; i++) {
-        console.log(objectIDs[i].primaryImage);
-    }
+        var objectApiUrl = ("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + objectIDs[i]);
+
+        //Fetch data/property from endpoint and use user search from object[i] to search
+        fetch(objectApiUrl)
+            .then (function (response) {
+                return response.json();
+            })
+            .then (function(data){
+                console.log(data);
+            })
+    };
 };
 
-
-
+//Event Listeners
+var searchbuttonEl = document.querySelector('#search-button');
+searchbuttonEl.addEventListener("click", searchHandler);
 
 
 

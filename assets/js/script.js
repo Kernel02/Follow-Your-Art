@@ -153,8 +153,7 @@ var checkData = function (objectIDs, artSearch) {
 var searchbuttonEl = document.querySelector('#search-button');
 searchbuttonEl.addEventListener("click", searchHandler);
 
-
-
+//
 
 
 

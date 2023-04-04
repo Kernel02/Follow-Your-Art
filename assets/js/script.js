@@ -98,16 +98,6 @@ function pullArticles(data) {
 
 
 
-
-
-
-
-
-
-
-
-
-
 //searchHandler, fetch API, loop through object array
 function searchHandler(event) {
     event.preventDefault();
@@ -119,13 +109,14 @@ function searchHandler(event) {
     //Fetch user search for objectIDs to be passed to another endpoint
     fetch(searchApiUrl)
         .then(function (response) {
-            if (!response.ok);
+            if (!response.ok) {
+                //return error response
+                console.error(response);
+            }
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             fetchData(data.objectIDs, artSearch);
-            console.log(data.objectIDs);
         });
 };
 
@@ -136,24 +127,21 @@ var fetchData = function (objectIDs, artSearch) {
     artSearchtermEl.textContent = artSearch;
 
     //Check to see if objectIDs exist from search
-    var artcontainerEl = document.querySelector('#art-container');
+    var artContainerEl = document.querySelector('#art-container');
 
     if (!objectIDs || objectIDs.length === 0) {
-        artcontainerEl.textContent = "No art found.";
+        artContainerEl.textContent = "No art found.";
         return;
     }
 
-    //Set artcontainerEl to empty string
-    artcontainerEl.innerHTML = '';
+    //Set artContainerEl to empty string
+    artContainerEl.innerHTML = '';
 
     //Loop through objectIDs array
     for (var i = 0; i < 10; i++) {
         if (!objectIDs[i]) break;
-        //Break
-        // if (i = 10) break;
 
         var objectApiUrl = ("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + objectIDs[i]);
-        console.log(objectApiUrl);
 
         //Fetch data/property from endpoint and use user search from object[i] to search
         fetch(objectApiUrl)
@@ -170,12 +158,12 @@ var fetchData = function (objectIDs, artSearch) {
     //Create Elements
     function createElement(data) {
         console.log(data);
-        var artcardEl = document.createElement('div');
-        artcardEl.classList.add('art-image');
+        var artCardEl = document.createElement('div');
+        artCardEl.classList.add('art-image');
 
-        var artinfoEl = document.createElement('h3');
-        artinfoEl.classList.add('art-title');
-        artinfoEl.textContent = data.title;
+        var artInfoEl = document.createElement('h3');
+        artInfoEl.classList.add('art-title');
+        artInfoEl.textContent = data.title;
 
 
         //Create child to display under elements
@@ -183,14 +171,10 @@ var fetchData = function (objectIDs, artSearch) {
         artImageEl.setAttribute('src', data.primaryImage);
         artImageEl.setAttribute('alt', data.title);
         artImageEl.style.width = '200px';
-        artcardEl.appendChild(artImageEl);
-        artContainerEl.appendChild(artcardEl);
-        artcardEl.appendChild(artinfoEl);
-
-        
-        
-    };
-
+        artCardEl.appendChild(artImageEl);
+        artContainerEl.appendChild(artCardEl);
+        artCardEl.appendChild(artInfoEl);
+};
 
     //Event Listeners
     searchButtonEl.addEventListener("click", searchHandler);

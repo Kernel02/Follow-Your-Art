@@ -1,12 +1,20 @@
 //Global Variables
 const artSearchTermEl = document.querySelector('#art-search-term');
 const artContainerEl = document.querySelector('#art-container');
-
+const searchButtonEl = document.querySelector('#search-button');
+console.log(searchButtonEl)
 //Category Department Handler
 //Create Elements
 //Append Child
 //Display Art
-
+function pullArticles(data) {
+    let department = data.department; console.log(department) 
+    fetch("https://api.si.edu/openaccess/api/v1.0/content?id=ld1-1646149545906-1646150468379-0&api_key=faRECqFv2PqD8hhKffRGnJ7MIo3ZnYi42X5v7jla") 
+        .then(function(response) { return response.json(); 
+        })
+        .then(function(newData) { console.log(newData.response) 
+        }); 
+}
 
 
 
@@ -185,7 +193,6 @@ var fetchData = function (objectIDs, artSearch) {
 
 
     //Event Listeners
-    var searchButtonEl = document.querySelector('#search-button');
     searchButtonEl.addEventListener("click", searchHandler);
 
 

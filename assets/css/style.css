@@ -3,20 +3,40 @@
     margin: 0;
     padding: 0;
 }
+#h1 {font-family:'Noto Sans';
+    font-size: 50px;
+}
+/* h1, h2, h3, h4, h5, h6 {
+    color: rgb(54, 53, 53);
+    font-family: 'Noto Sans', sans-serif;} */
 
-header {
+html {background-color: teal;
+font-family:'Noto Sans', sans-serif;}
+
+body {
+   
+}
+
+header {color: black;
+    font-family: 'Noto Sans', sans-serif;
 
 }
-title
-
-main {
+title {color: black;
+    font-family: 'Noto Sans', sans-serif;
 
 }
 
-footer {
+main {color: black;
+    font-family: 'Noto Sans', sans-serif;
+
+}
+
+footer {color: darkslategrey;
+    font-family: 'Noto Sans', sans-serif;
 
 }
 
 button {
-    
+    color: darkslategrey;
+    font-family: 'Noto Sans', sans-serif;
 }

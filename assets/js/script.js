@@ -2,20 +2,29 @@
 const artSearchTermEl = document.querySelector('#art-search-term');
 const artContainerEl = document.querySelector('#art-container');
 const searchButtonEl = document.querySelector('#search-button');
-console.log(searchButtonEl)
 //Category Department Handler
-//Create Elements
-//Append Child
-//Display Art
-function pullArticles(data) {
-    let department = data.department; console.log(department) 
-    fetch("https://api.si.edu/openaccess/api/v1.0/content?id=ld1-1646149545906-1646150468379-0&api_key=faRECqFv2PqD8hhKffRGnJ7MIo3ZnYi42X5v7jla") 
-        .then(function(response) { return response.json(); 
-        })
-        .then(function(newData) { console.log(newData.response) 
-        }); 
+
+let url = "http://colormind.io/api/";
+let data = {
+	model : "default",
 }
 
+let http = new XMLHttpRequest();
+
+http.onreadystatechange = function() {
+	if(http.readyState == 4 && http.status == 200) {
+		let palette = JSON.parse(http.responseText).result;
+        let colorShiftEls = document.querySelectorAll(".color");
+        console.log(colorShiftEls);
+        for (i=0; i<colorShiftEls.length; i++) {
+            colorShiftEls[i].style.backgroundColor = "rgb(" + palette[0].join() + ")";
+            colorShiftEls[i].style.color = "rgb(" + palette[2].join() + ")"
+        }
+	}
+}
+
+http.open("POST", url, true);
+http.send(JSON.stringify(data));
 
 
 
@@ -157,21 +166,23 @@ var fetchData = function (objectIDs, artSearch) {
 
     //Create Elements
     function createElement(data) {
-        console.log(data);
         var artCardEl = document.createElement('div');
         artCardEl.classList.add('art-image');
 
         var artInfoEl = document.createElement('h3');
         artInfoEl.classList.add('art-title');
         artInfoEl.textContent = data.title;
-
+        artInfoEl.classList.add("color")
 
         //Create child to display under elements
+        let artAnchor = document.createElement("a");
+        artAnchor.setAttribute("href", data.objectURL);
         var artImageEl = document.createElement('img');
         artImageEl.setAttribute('src', data.primaryImage);
         artImageEl.setAttribute('alt', data.title);
         artImageEl.style.width = '200px';
-        artCardEl.appendChild(artImageEl);
+        artAnchor.appendChild(artImageEl);
+        artCardEl.appendChild(artAnchor);
         artContainerEl.appendChild(artCardEl);
         artCardEl.appendChild(artInfoEl);
 };

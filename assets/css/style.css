@@ -5,6 +5,7 @@
 }
 #h1 {font-family:'Noto Sans';
     font-size: 50px;
+    color: darkslategray
 }
 /* h1, h2, h3, h4, h5, h6 {
     color: rgb(54, 53, 53);
@@ -14,29 +15,53 @@ html {background-color: teal;
 font-family:'Noto Sans', sans-serif;}
 
 body {
+    background-color: teal;
    
 }
 
-header {color: black;
+head {color: black;
     font-family: 'Noto Sans', sans-serif;
-
+    flex-wrap: wrap;
 }
-title {color: black;
-    font-family: 'Noto Sans', sans-serif;
 
+title {color: rgb(73, 73, 73);
+    font-family: 'Noto Sans', sans-serif;
+    position:absolute;
+    margin: 20px;
 }
 
 main {color: black;
     font-family: 'Noto Sans', sans-serif;
 
 }
+form {
+    position:relative;
+}
 
+label {
+    margin: 5px;
+    position: absolute;
+    top: 10px;
+    font-size: 35px;
+    font-family: 'Noto Sans', sans-serif;
+    color: rgb(73, 73, 73);    
+}
+input {
+    position: absolute;
+    top: 60px;
+    font-size: 28px;
+
+}
 footer {color: darkslategrey;
     font-family: 'Noto Sans', sans-serif;
-
+    position: fixed;
+    bottom: 10px;
 }
 
 button {
     color: darkslategrey;
     font-family: 'Noto Sans', sans-serif;
+    color: rgb(73, 73, 73);
+    position: absolute;
+    top: 100px;    
 }

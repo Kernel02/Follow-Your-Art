@@ -3,42 +3,23 @@ const artSearchTermEl = document.querySelector('#art-search-term');
 const artContainerEl = document.querySelector('#art-container');
 const searchButtonEl = document.querySelector('#search-button');
 //Category Department Handler
-//Create Elements
-//Append Child
-//Display Art
-// function fetchColorScheme() {
-//     fetch("https://www.thecolorapi.com/scheme?rgb=rgb(50,50,50)&count=6") 
-//         .then(function(response) {     
-//             return response.json(); 
-//         })
-//         .then(function(data) {   
-//             console.log(data)
-//             let colorR = data.colors[5].rgb.r
-//             let colorG = data.colors[5].rgb.g
-//             let colorB = data.colors[5].rgb.b
-//             let fullColor = "rgb(" + colorR + ", " + colorG + ", " + colorB + ")"
-//             console.log(fullColor)
-//             let colorShiftEl = document.getElementById("color");
-//             // colorShiftEl.setAttribute("style", "background-color:" + fullColor)
-//             colorShiftEl.style.backgroundColor = fullColor
-//         }); 
-// }
-var url = "http://colormind.io/api/";
-var data = {
+
+let url = "http://colormind.io/api/";
+let data = {
 	model : "default",
 }
 
-var http = new XMLHttpRequest();
+let http = new XMLHttpRequest();
 
 http.onreadystatechange = function() {
 	if(http.readyState == 4 && http.status == 200) {
-		var palette = JSON.parse(http.responseText).result;
-        console.log(palette[0].join())
-        console.log(palette[1].join());
-        let colorShiftEl = document.getElementById("color");
-        console.log(palette[0][0])
-        colorShiftEl.style.backgroundColor = "rgb(" + palette[0].join() + ")";
-        colorShiftEl.style.color = "rgb(" + palette[2].join() + ")"
+		let palette = JSON.parse(http.responseText).result;
+        let colorShiftEls = document.querySelectorAll(".color");
+        console.log(colorShiftEls);
+        for (i=0; i<colorShiftEls.length; i++) {
+            colorShiftEls[i].style.backgroundColor = "rgb(" + palette[0].join() + ")";
+            colorShiftEls[i].style.color = "rgb(" + palette[2].join() + ")"
+        }
 	}
 }
 
@@ -191,7 +172,7 @@ var fetchData = function (objectIDs, artSearch) {
         var artInfoEl = document.createElement('h3');
         artInfoEl.classList.add('art-title');
         artInfoEl.textContent = data.title;
-
+        artInfoEl.classList.add("color")
 
         //Create child to display under elements
         let artAnchor = document.createElement("a");

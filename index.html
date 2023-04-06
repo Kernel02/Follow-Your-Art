@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Follow your Art!</title>
 </head>
 <body>
-
-    <header id="h1"><h1>Follow your Art</h1></header>
+    <header class="color" id="h1"><h1>Follow your Art</h1></header>
    <form>
-    <label for="Genre">Enter Art Genre</label>
+    <label class="color" for="Genre">Enter Art Genre</label>
     <input type="text" id="search-value-input" placeholder="ex Ancient Asian Art">
+    <!-- <button class="button is-info is-outlined">Submit</button> -->
     <button type="submit" id="search-button" class="button">Submit</button>
    </form>
     
@@ -24,7 +24,6 @@
         <h2 id="art-search-term"> </h2>
         <div id="art-container"> </div>
    </div>
-   <h1 id="color">This text should change colors</h1>
    <footer>Powered by Metropolitan Museum of Art API and Smithosonian API</footer>
    
    <script src="assets/js/script.js"></script>

@@ -1,209 +1,141 @@
 //Global Variables
-const artSearchTermEl = document.querySelector('#art-search-term');
-const artContainerEl = document.querySelector('#art-container');
-const searchButtonEl = document.querySelector('#search-button');
+const artSearchTermEl = document.querySelector("#art-search-term");
+const artContainerEl = document.querySelector("#art-container");
+const searchButtonEl = document.querySelector("#search-button");
 //Category Department Handler
 
-let url = "http://colormind.io/api/";
-let data = {
-	model : "default",
+function getPalette() {
+  const url = "http://colormind.io/api/";
+  const data = {
+    model: "default",
+  };
+
+  const http = new XMLHttpRequest();
+
+  http.onreadystatechange = function () {
+    if (http.readyState == 4 && http.status == 200) {
+      const palette = JSON.parse(http.responseText).result;
+      const color0 = document.querySelectorAll(".color-0");
+      const color1 = document.querySelectorAll(".color-1");
+      const color2 = document.querySelectorAll(".color-2");
+      const color3 = document.querySelectorAll(".color-3");
+      const color4 = document.querySelectorAll(".color-4");
+      for (i = 0; i < color0.length; i++) {
+        color0[i].style.backgroundColor = "rgb(" + palette[0].join() + ")";
+      }
+      for (i = 0; i < color1.length; i++) {
+        color1[i].style.backgroundColor = "rgb(" + palette[1].join() + ")";
+      }
+      for (i = 0; i < color2.length; i++) {
+        color2[i].style.color = "rgb(" + palette[2].join() + ")";
+      }
+      for (i = 0; i < color3.length; i++) {
+        color3[i].style.backgroundColor = "rgb(" + palette[3].join() + ")";
+      }
+      for (i = 0; i < color4.length; i++) {
+        color4[i].style.color = "rgb(" + palette[4].join() + ")";
+      }
+    }
+  };
+
+  http.open("POST", url, true);
+  http.send(JSON.stringify(data));
 }
-
-let http = new XMLHttpRequest();
-
-http.onreadystatechange = function() {
-	if(http.readyState == 4 && http.status == 200) {
-		let palette = JSON.parse(http.responseText).result;
-        let colorShiftEls = document.querySelectorAll(".color");
-        console.log(colorShiftEls);
-        for (i=0; i<colorShiftEls.length; i++) {
-            colorShiftEls[i].style.backgroundColor = "rgb(" + palette[0].join() + ")";
-            colorShiftEls[i].style.color = "rgb(" + palette[2].join() + ")"
-        }
-	}
-}
-
-http.open("POST", url, true);
-http.send(JSON.stringify(data));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //searchHandler, fetch API, loop through object array
 function searchHandler(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    var artSearchEl = document.querySelector('#search-value-input');
-    var artSearch = artSearchEl.value.trim();
-    var searchApiUrl = "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" + artSearch;
+  const artSearchEl = document.querySelector("#search-value-input");
+  const artSearch = artSearchEl.value.trim();
+  const searchApiUrl =
+    "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" +
+    artSearch;
 
-    //Fetch user search for objectIDs to be passed to another endpoint
-    fetch(searchApiUrl)
-        .then(function (response) {
-            if (!response.ok) {
-                //return error response
-                console.error(response);
-            }
-            return response.json();
-        })
-        .then(function (data) {
-            fetchData(data.objectIDs, artSearch);
-        });
-};
+  //Fetch user search for objectIDs to be passed to another endpoint
+  fetch(searchApiUrl)
+    .then(function (response) {
+      if (!response.ok) {
+        //return error response
+        console.error(response);
+      }
+      return response.json();
+    })
+    .then(function (data) {
+      fetchData(data.objectIDs, artSearch);
+    });
+}
 
 //Check objectIDs and display text on html elements
-var fetchData = function (objectIDs, artSearch) {
+function fetchData(objectIDs, artSearch) {
+  const artSearchtermEl = document.querySelector("#art-search-term");
+  artSearchtermEl.textContent = artSearch;
 
-    var artSearchtermEl = document.querySelector('#art-search-term');
-    artSearchtermEl.textContent = artSearch;
+  //Check to see if objectIDs exist from search
 
-    //Check to see if objectIDs exist from search
-    var artContainerEl = document.querySelector('#art-container');
+  if (!objectIDs || objectIDs.length === 0) {
+    artContainerEl.textContent = "No art found.";
+    return;
+  }
 
-    if (!objectIDs || objectIDs.length === 0) {
-        artContainerEl.textContent = "No art found.";
-        return;
-    }
+  //Set artContainerEl to empty string
+  artContainerEl.innerHTML = "";
 
-    //Set artContainerEl to empty string
-    artContainerEl.innerHTML = '';
+  //Loop through objectIDs array
+  for (let i = 0; i < 10; i++) {
+    if (!objectIDs[i]) break;
 
-    //Loop through objectIDs array
-    for (var i = 0; i < 10; i++) {
-        if (!objectIDs[i]) break;
+    const objectApiUrl =
+      "https://collectionapi.metmuseum.org/public/collection/v1/objects/" +
+      objectIDs[i];
 
-        var objectApiUrl = ("https://collectionapi.metmuseum.org/public/collection/v1/objects/" + objectIDs[i]);
+    //Fetch data/property from endpoint and use user search from object[i] to search
+    fetch(objectApiUrl)
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        createElement(data);
+      });
+  }
+  getPalette();
+}
 
-        //Fetch data/property from endpoint and use user search from object[i] to search
-        fetch(objectApiUrl)
-            .then (function (response) {
-                return response.json();
-            })
-            .then (function(data){
-                createElement(data)
-            });
+//Create Elements
+function createElement(data) {
+  const cardDiv = document.createElement("div");
+  cardDiv.classList.add("card");
+  cardDiv.setAttribute("style", "max-width: fit-content; margin: 20px;");
+  const cardHeader = document.createElement("header");
+  cardHeader.classList.add("card-header", "color-3");
+  const cardHeaderText = document.createElement("p");
+  cardHeaderText.classList.add("card-header-title", "color-4");
+  cardHeaderText.textContent = data.title;
+  const cardImageDiv = document.createElement("div");
+  cardImageDiv.classList.add("card-image", "color-3");
+  const cardImageFigure = document.createElement("figure");
+  cardImageFigure.classList.add("image", "is-4by3");
+  const anchorContainer = document.createElement("a");
+  anchorContainer.href = data.objectURL;
+  const cardImage = document.createElement("img");
+  cardImage.src = data.primaryImage;
+  cardImage.alt = data.title;
+  const cardContentDiv = document.createElement("div");
+  cardContentDiv.classList.add("card-content", "color-3");
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("content", "color-4");
+  cardContent.textContent = "Art Department: " + data.department;
 
-    };
-};
+  cardHeader.appendChild(cardHeaderText);
+  cardDiv.appendChild(cardHeader);
+  anchorContainer.appendChild(cardImage);
+  cardImageFigure.appendChild(anchorContainer);
+  cardImageDiv.appendChild(cardImageFigure);
+  cardDiv.appendChild(cardImageDiv);
+  cardContentDiv.appendChild(cardContent);
+  cardDiv.appendChild(cardContentDiv);
+  artContainerEl.appendChild(cardDiv);
+}
 
-    //Create Elements
-    function createElement(data) {
-        var artCardEl = document.createElement('div');
-        artCardEl.classList.add('art-image');
-
-        var artInfoEl = document.createElement('h3');
-        artInfoEl.classList.add('art-title');
-        artInfoEl.textContent = data.title;
-        artInfoEl.classList.add("color")
-
-        //Create child to display under elements
-        let artAnchor = document.createElement("a");
-        artAnchor.setAttribute("href", data.objectURL);
-        var artImageEl = document.createElement('img');
-        artImageEl.setAttribute('src', data.primaryImage);
-        artImageEl.setAttribute('alt', data.title);
-        artImageEl.style.width = '200px';
-        artAnchor.appendChild(artImageEl);
-        artCardEl.appendChild(artAnchor);
-        artContainerEl.appendChild(artCardEl);
-        artCardEl.appendChild(artInfoEl);
-};
-
-    //Event Listeners
-    searchButtonEl.addEventListener("click", searchHandler);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//Event Listeners
+searchButtonEl.addEventListener("click", searchHandler);

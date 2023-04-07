@@ -1,67 +1,80 @@
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-#h1 {font-family:'Noto Sans';
-    font-size: 50px;
-    color: darkslategray
+h1 {
+  font-family: "Noto Sans";
+  text-align: center;
+  font-size: 50px;
 }
-/* h1, h2, h3, h4, h5, h6 {
-    color: rgb(54, 53, 53);
-    font-family: 'Noto Sans', sans-serif;} */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: rgb(54, 53, 53);
+  font-family: "Noto Sans", sans-serif;
+}
 
-html {background-color: teal;
-font-family:'Noto Sans', sans-serif;}
+html {
+  background-color: teal;
+  font-family: "Noto Sans", sans-serif;
+}
 
 body {
-    background-color: teal;
-   
+  background-color: teal;
 }
 
-head {color: black;
-    font-family: 'Noto Sans', sans-serif;
-    flex-wrap: wrap;
+head {
+  color: black;
+  font-family: "Noto Sans", sans-serif;
+  flex-wrap: wrap;
 }
 
-title {color: rgb(73, 73, 73);
-    font-family: 'Noto Sans', sans-serif;
-    position:absolute;
-    margin: 20px;
+title {
+  color: rgb(73, 73, 73);
+  font-family: "Noto Sans", sans-serif;
+  position: absolute;
+  margin: 20px;
 }
 
-main {color: black;
-    font-family: 'Noto Sans', sans-serif;
-
+main {
+  color: black;
+  font-family: "Noto Sans", sans-serif;
 }
 form {
-    position:relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 label {
-    margin: 5px;
-    position: absolute;
-    top: 10px;
-    font-size: 35px;
-    font-family: 'Noto Sans', sans-serif;
-    color: rgb(73, 73, 73);    
+  margin: 5px;
+  font-size: 35px;
+  font-family: "Noto Sans", sans-serif;
+  color: rgb(73, 73, 73);
 }
 input {
-    position: absolute;
-    top: 60px;
-    font-size: 28px;
-
+  max-width: 250px;
+  font-size: 28px;
 }
-footer {color: darkslategrey;
-    font-family: 'Noto Sans', sans-serif;
-    position: fixed;
-    bottom: 10px;
+footer {
+  font-family: "Noto Sans", sans-serif;
+  text-align: center;
+  padding: 15px;
+  margin-top: 15px;
 }
 
 button {
-    color: darkslategrey;
-    font-family: 'Noto Sans', sans-serif;
-    color: rgb(73, 73, 73);
-    position: absolute;
-    top: 100px;    
+  max-width: fit-content;
+  color: darkslategrey;
+  font-family: "Noto Sans", sans-serif;
+  color: rgb(73, 73, 73);
+}
+#art-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

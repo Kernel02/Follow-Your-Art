@@ -14,34 +14,34 @@ h3,
 h4,
 h5,
 h6 {
-  color: rgb(54, 53, 53);
+  /* color: rgb(54, 53, 53); */
   font-family: "Noto Sans", sans-serif;
 }
 
 html {
-  background-color: teal;
+  /* background-color: teal; */
   font-family: "Noto Sans", sans-serif;
 }
 
 body {
-  background-color: teal;
+  /* background-color: teal; */
 }
 
 head {
-  color: black;
+  /* color: black; */
   font-family: "Noto Sans", sans-serif;
   flex-wrap: wrap;
 }
 
-title {
+/* title {
   color: rgb(73, 73, 73);
   font-family: "Noto Sans", sans-serif;
   position: absolute;
   margin: 20px;
-}
+} */
 
 main {
-  color: black;
+  /* color: black; */
   font-family: "Noto Sans", sans-serif;
 }
 form {
@@ -54,7 +54,7 @@ label {
   margin: 5px;
   font-size: 35px;
   font-family: "Noto Sans", sans-serif;
-  color: rgb(73, 73, 73);
+  /* color: rgb(73, 73, 73); */
 }
 input {
   max-width: 250px;
@@ -69,12 +69,29 @@ footer {
 
 button {
   max-width: fit-content;
-  color: darkslategrey;
   font-family: "Noto Sans", sans-serif;
-  color: rgb(73, 73, 73);
+  margin-top: 10px;
+}
+button:hover {
+    color: color0
 }
 #art-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.color-0 {
+  background-color:paleturquoise;
+}
+.color-1 {
+  background-color:cadetblue;
+}
+.color-2 {
+  color:coral
+}
+.color-3 {
+  background-color:floralwhite
+}
+.color-4 {
+  color:coral
 }

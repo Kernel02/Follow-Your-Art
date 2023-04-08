@@ -2,17 +2,17 @@
 const artSearchTermEl = document.querySelector("#art-search-term");
 const artContainerEl = document.querySelector("#art-container");
 const searchButtonEl = document.querySelector("#search-button");
-//Category Department Handler
 
+//Send a request to the Colormind API
 function getPalette() {
   const url = "http://colormind.io/api/";
   const data = {
     model: "default",
   };
-
   const http = new XMLHttpRequest();
 
   http.onreadystatechange = function () {
+    //Use the response, if it returns properly, to change the background and text colors(color scheme) of elements based on their class name
     if (http.readyState == 4 && http.status == 200) {
       const palette = JSON.parse(http.responseText).result;
       const color0 = document.querySelectorAll(".color-0");
@@ -41,7 +41,6 @@ function getPalette() {
   http.open("POST", url, true);
   http.send(JSON.stringify(data));
 }
-
 //searchHandler, fetch API, loop through object array
 function searchHandler(event) {
   event.preventDefault();
@@ -95,14 +94,15 @@ function fetchData(objectIDs, artSearch) {
         return response.json();
       })
       .then(function (data) {
-        createElement(data);
+        createElements(data);
       });
   }
   getPalette();
 }
 
-//Create Elements
-function createElement(data) {
+//Create elements using the format for cards from the CSS framework, Bulma
+function createElements(data) {
+  //Create all of the elements required and give them the proper Bulma class names, as well as the classes to change colors based on the palette
   const cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
   cardDiv.setAttribute("style", "max-width: fit-content; margin: 20px;");
@@ -126,6 +126,7 @@ function createElement(data) {
   cardContent.classList.add("content", "color-4");
   cardContent.textContent = "Art Department: " + data.department;
 
+  //Append elements in proper order so that it matches the Bulma format
   cardHeader.appendChild(cardHeaderText);
   cardDiv.appendChild(cardHeader);
   anchorContainer.appendChild(cardImage);

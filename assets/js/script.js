@@ -81,7 +81,7 @@ function fetchData(objectIDs, artSearch) {
   artContainerEl.innerHTML = "";
 
   //Loop through objectIDs array
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 30; i++) {
     if (!objectIDs[i]) break;
 
     const objectApiUrl =
@@ -95,16 +95,27 @@ function fetchData(objectIDs, artSearch) {
       })
       .then(function (data) {
         createElements(data);
+      })
+      .then(function () {
+        if (i === 29) {
+          getPalette();
+        }
       });
   }
-  getPalette();
 }
 
 //Create elements using the format for cards from the CSS framework, Bulma
 function createElements(data) {
   //Create all of the elements required and give them the proper Bulma class names, as well as the classes to change colors based on the palette
   const cardDiv = document.createElement("div");
-  cardDiv.classList.add("card");
+  cardDiv.classList.add(
+    "card",
+    "color-3",
+    "is-flex",
+    "is-flex-direction-column",
+    "is-justify-content-center",
+    "is-justify-content-space-evenly"
+  );
   cardDiv.setAttribute("style", "max-width: fit-content; margin: 20px;");
   const cardHeader = document.createElement("header");
   cardHeader.classList.add("card-header", "color-3");
@@ -118,7 +129,11 @@ function createElements(data) {
   const anchorContainer = document.createElement("a");
   anchorContainer.href = data.objectURL;
   const cardImage = document.createElement("img");
-  cardImage.src = data.primaryImage;
+  if (data.primaryImage) {
+    cardImage.src = data.primaryImage;
+  } else {
+    cardImage.src = "https://placehold.co/200x200?text=Image+failed+to+load.";
+  }
   cardImage.alt = data.title;
   const cardContentDiv = document.createElement("div");
   cardContentDiv.classList.add("card-content", "color-3");

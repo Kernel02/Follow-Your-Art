@@ -159,8 +159,8 @@ function createElements(data) {
 
 //For loop of localstorage search terms and create buttons
 for (let x = 0; x < searchTerms.length; x++) {
-  // Limit the number of searches to 3
-  if (searchTerms.length > 3) {
+  // Limit the number of searches to 2
+  if (searchTerms.length > 2) {
     searchTerms.pop();
   }
 //Create buttons for previous searches
@@ -168,7 +168,6 @@ const searchTermBtn = document.createElement("button");
 searchTermBtn.textContent = searchTerms[x];
 searchTermBtn.classList.add(
   "button",
-  "previous-search",
   "is-small",
   "is-rounded",
   "color-4",

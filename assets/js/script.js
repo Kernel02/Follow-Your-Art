@@ -155,13 +155,7 @@ function createElements(data) {
   cardContentDiv.appendChild(cardContent);
   cardDiv.appendChild(cardContentDiv);
   artContainerEl.appendChild(cardDiv);
-}
-
-//Event Listeners
-searchButtonEl.addEventListener("click", searchHandler);
-
-//Searh previous results
-
+};
 
 //For loop of localstorage search terms and create buttons
 for (let x = 0; x < searchTerms.length; x++) {
@@ -182,19 +176,20 @@ searchTermBtn.classList.add(
 );
 artSearchTermEl.appendChild(searchTermBtn);
 
-// Add click event listener to each button
-searchTermBtn.addEventListener("click", previousSearches);
-
 function previousSearches() {
-  // Get the corresponding search term string from local storage
-  const searchTermString = localStorage.getItem(searchTerms[x]);
   // If the search term string exists in local storage
-  if (searchTermString) {
+  if (searchTerms[x]) {
     // Set the value of the user form to the search term string
     const userInput = document.getElementById("search-value-input");
-    userInput.value = searchTermString;
-    const keyEvent = new KeyboardEvent("keydown", { key: "Enter"});
-    document.body.dispatchEvent(keyEvent);
+    userInput.value = searchTerms[x];
+    const searchValueEl = document.querySelector("#search-value-input");
+    searchValueEl.innerHTML = searchTerms[x];
   }
   };
+
+// Add click event listener to each button
+searchTermBtn.addEventListener("click", previousSearches);
 };
+
+//Event Listeners
+searchButtonEl.addEventListener("click", searchHandler);

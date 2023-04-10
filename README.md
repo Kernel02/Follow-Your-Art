@@ -4,9 +4,9 @@ A search tool that displays art from the Metropolitan Museum of Art with an inte
 <br>
 
 # User Story
-As a user, I want to have a tool to access knowledge of the Met Museum with an interactive web page for easier learn for students.
-The webpage should provide information from The Met Museum according to user searches and pull data information from the collection.
-The webpage should be interactive and fun for students who are trying to learn from The Met Museum of Art.
+As a user, I want to have a tool to access knowledge of the Met Museum with an interactive webpage for easier learning for students.
+I want the webpage to provide information from The Met Museum according to user searches and pull data information from the collection.
+I want the webpage to be interactive and fun for students who are trying to learn from The Met Museum of Art by using different color schemes.
 
 <br>
 
@@ -20,6 +20,11 @@ The webpage should be interactive and fun for students who are trying to learn f
 * Added ColorMIND API to make the web page more interactive with changing color schemes.
 
 ### **Links**
+*link for Met Museum of Art API and ColorMIND API*
+
+* [The Met Museum of Art](https://metmuseum.github.io/)
+
+* [ColorMIND API](http://colormind.io/api-access/)
 
 *link for deployed application from github.com*
 

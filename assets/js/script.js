@@ -2,6 +2,8 @@
 const artSearchTermEl = document.querySelector("#art-search-term");
 const artContainerEl = document.querySelector("#art-container");
 const searchButtonEl = document.querySelector("#search-button");
+//Local Storage Array
+let searchTerms = JSON.parse(localStorage.getItem("searches")) || [];
 
 //Send a request to the Colormind API
 function getPalette() {
@@ -51,6 +53,12 @@ function searchHandler(event) {
     "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" +
     artSearch;
 
+  // Save searches to local storage
+  localStorage.setItem("searches", JSON.stringify(searchTerms));
+
+  // Add search to the beginning of the searches array
+  searchTerms.unshift(artSearch);
+
   //Fetch user search for objectIDs to be passed to another endpoint
   fetch(searchApiUrl)
     .then(function (response) {
@@ -66,12 +74,8 @@ function searchHandler(event) {
 }
 
 //Check objectIDs and display text on html elements
-function fetchData(objectIDs, artSearch) {
-  const artSearchtermEl = document.querySelector("#art-search-term");
-  artSearchtermEl.textContent = artSearch;
-
+function fetchData(objectIDs) {
   //Check to see if objectIDs exist from search
-
   if (!objectIDs || objectIDs.length === 0) {
     artContainerEl.textContent = "No art found.";
     return;
@@ -101,8 +105,8 @@ function fetchData(objectIDs, artSearch) {
           getPalette();
         }
       });
-  }
-}
+  };
+};
 
 //Create elements using the format for cards from the CSS framework, Bulma
 function createElements(data) {
@@ -155,3 +159,42 @@ function createElements(data) {
 
 //Event Listeners
 searchButtonEl.addEventListener("click", searchHandler);
+
+//Searh previous results
+
+
+//For loop of localstorage search terms and create buttons
+for (let x = 0; x < searchTerms.length; x++) {
+  // Limit the number of searches to 3
+  if (searchTerms.length > 3) {
+    searchTerms.pop();
+  }
+//Create buttons for previous searches
+const searchTermBtn = document.createElement("button");
+searchTermBtn.textContent = searchTerms[x];
+searchTermBtn.classList.add(
+  "button",
+  "previous-search",
+  "is-small",
+  "is-rounded",
+  "color-4",
+  "color-3"
+);
+artSearchTermEl.appendChild(searchTermBtn);
+
+// Add click event listener to each button
+searchTermBtn.addEventListener("click", previousSearches);
+
+function previousSearches() {
+  // Get the corresponding search term string from local storage
+  const searchTermString = localStorage.getItem(searchTerms[x]);
+  // If the search term string exists in local storage
+  if (searchTermString) {
+    // Set the value of the user form to the search term string
+    const userInput = document.getElementById("search-value-input");
+    userInput.value = searchTermString;
+    const keyEvent = new KeyboardEvent("keydown", { key: "Enter"});
+    document.body.dispatchEvent(keyEvent);
+  }
+  };
+};

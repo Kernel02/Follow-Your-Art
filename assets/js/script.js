@@ -8,7 +8,7 @@ let searchTerms = JSON.parse(localStorage.getItem("searches")) || [];
 
 //Send a request to the Colormind API
 function getPalette() {
-  const url = "http://colormind.io/api/";
+  const url = "https://colormind.io/api/";
   const data = {
     model: "default",
   };

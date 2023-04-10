@@ -1,7 +1,8 @@
 //Global Variables
-const artSearchTermEl = document.querySelector("#art-search-term");
+const previousSearchTermEl = document.querySelector("#previous-search-terms");
 const artContainerEl = document.querySelector("#art-container");
 const searchButtonEl = document.querySelector("#search-button");
+var searchValueEl = document.querySelector("#search-value-input");
 //Local Storage Array
 let searchTerms = JSON.parse(localStorage.getItem("searches")) || [];
 
@@ -53,11 +54,11 @@ function searchHandler(event) {
     "https://collectionapi.metmuseum.org/public/collection/v1/search?q=" +
     artSearch;
 
-  // Save searches to local storage
-  localStorage.setItem("searches", JSON.stringify(searchTerms));
-
   // Add search to the beginning of the searches array
   searchTerms.unshift(artSearch);
+
+  // Save searches to local storage
+  localStorage.setItem("searches", JSON.stringify(searchTerms));
 
   //Fetch user search for objectIDs to be passed to another endpoint
   fetch(searchApiUrl)
@@ -105,8 +106,8 @@ function fetchData(objectIDs) {
           getPalette();
         }
       });
-  };
-};
+  }
+}
 
 //Create elements using the format for cards from the CSS framework, Bulma
 function createElements(data) {
@@ -155,40 +156,99 @@ function createElements(data) {
   cardContentDiv.appendChild(cardContent);
   cardDiv.appendChild(cardContentDiv);
   artContainerEl.appendChild(cardDiv);
-};
+}
+
+//For loop of localstorage search terms and create buttons
+// for (let x = 0; x < searchTerms.length; x++) {
+//   // Limit the number of searches to 3
+//   if (searchTerms.length > 3) {
+//     searchTerms.pop();
+//   }
+//   //Create buttons for previous searches
+//   const searchTermBtn = document.createElement("button");
+//   searchTermBtn.textContent = searchTerms[x];
+//   searchTermBtn.classList.add(
+//     "button",
+//     "previous-button",
+//     "is-small",
+//     "is-rounded",
+//     "color-4",
+//     "color-3"
+//   );
+//   previousSearchTermEl.appendChild(searchTermBtn);
+
+//   function previousSearches() {
+//     // If the search term string exists in local storage
+//     if (searchTerms[x]) {
+//       // Set the value of the user form to the search term string
+//       const userInput = document.getElementById("search-value-input");
+//       userInput.value = searchTerms[x];
+//       const searchValueEl = document.querySelector("#search-value-input");
+//       searchValueEl.innerHTML = searchTerms[x];
+//     }
+//   }
+
+//   // Add click event listener to each button
+//   searchTermBtn.addEventListener("click", function () {
+//     // If the search term string exists in local storage
+//     if (searchTerms[x]) {
+//       // Set the value of the user form to the search term string
+//       const userInput = document.getElementById("search-value-input");
+//       userInput.value = searchTerms[x];
+//       const searchValueEl = document.querySelector("#search-value-input");
+//       searchValueEl.innerHTML = searchTerms[x];
+//     }
+//   });
+
+//   // Add keyup event listener to searchTermBtn
+//   searchTermBtn.addEventListener("keyup", function (event) {
+//     if (event.keyCode === 13) {
+//       searchButtonEl.click();
+//     }
+//   });
+// }
+
+// //Event Listeners
+// searchButtonEl.addEventListener("click", searchHandler);
+
 
 //For loop of localstorage search terms and create buttons
 for (let x = 0; x < searchTerms.length; x++) {
-  // Limit the number of searches to 2
-  if (searchTerms.length > 2) {
+  // Limit the number of searches to 3
+  if (searchTerms.length > 3) {
     searchTerms.pop();
   }
-//Create buttons for previous searches
-const searchTermBtn = document.createElement("button");
-searchTermBtn.textContent = searchTerms[x];
-searchTermBtn.classList.add(
-  "button",
-  "is-small",
-  "is-rounded",
-  "color-4",
-  "color-3"
-);
-artSearchTermEl.appendChild(searchTermBtn);
+  //Create buttons for previous searches
+  const searchTermBtn = document.createElement("button");
+  searchTermBtn.textContent = searchTerms[x];
+  searchTermBtn.classList.add(
+    "button",
+    "previous-button",
+    "is-small",
+    "is-rounded",
+    "color-4",
+    "color-3"
+  );
+  previousSearchTermEl.appendChild(searchTermBtn);
 
-function previousSearches() {
-  // If the search term string exists in local storage
-  if (searchTerms[x]) {
+  // Add click event listener to each button
+  searchTermBtn.addEventListener("click", function () {
     // Set the value of the user form to the search term string
     const userInput = document.getElementById("search-value-input");
     userInput.value = searchTerms[x];
     const searchValueEl = document.querySelector("#search-value-input");
     searchValueEl.innerHTML = searchTerms[x];
-  }
-  };
+    searchButtonEl.click();
+    userInput.focus();
+  });
+}
 
-// Add click event listener to each button
-searchTermBtn.addEventListener("click", previousSearches);
-};
+// Add keyup event listener to searchValueEl
+searchValueEl.addEventListener("keyup", function (event) {
+  if (event.keyCode === 13) {
+    searchButtonEl.click();
+  }
+});
 
 //Event Listeners
 searchButtonEl.addEventListener("click", searchHandler);
